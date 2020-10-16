@@ -22,8 +22,8 @@ public class Exam {
 				body = sc.next();
 			}
 			if(str.equals("list")) {
-				System.out.print("제목 : " + title);
-				System.out.print("내용 : " + body);
+				System.out.println("제목 : " + title);
+				System.out.println("내용 : " + body);
 			}
 		}
 	}
