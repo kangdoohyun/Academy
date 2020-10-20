@@ -16,6 +16,7 @@ public class Exam {
 				break;
 			}
 			if(str.equals("add")) {
+				
 				System.out.print("게시물 제목을 출력해주세요 : ");
 				title = sc.next();
 				System.out.print("게시물 내용을 출력해주세요 : ");
