@@ -31,21 +31,19 @@ public class Test {
 				break;
 			}
 			if (cmd.equals("add")) {
-
 				Article a = new Article();
 				a.setId(no);
 				no++;
 				System.out.print("게시물 제목을 입력해주세요 :");
 				String title = sc.next();
 				a.setTitle(title);
-
 				System.out.print("게시물 내용을 입력해주세요 :");
 				String body = sc.next();
 				a.setBody(body);
-
 				articles.add(a);
 				System.out.println("게시물이 등록되었습니다.");
-//				size++;
+				
+				no++;
 			}
 			if (cmd.equals("list")) {
 				for (int i = 0; i < articles.size(); i++) {
@@ -61,76 +59,43 @@ public class Test {
 
 				System.out.print("수정할 게시물 선택 : ");
 				int targetid = sc.nextInt();
-				int index = getArticleIndexById();
-				for (int i = 0; i < articles.size(); i++) {
-
-					int id = articles.get(i).getId();
-					if (id == targetid) {
-						System.out.print("게시물 제목을 입력해주세요 :");
-						String newTitle = sc.next();
-
-						System.out.print("게시물 내용을 입력해주세요 :");
-						String newBody = sc.next();
-
-						Article newArticle = new Article();
-						newArticle.setId(id);
-						newArticle.setTitle(newTitle);
-						newArticle.setBody(newBody);
-						articles.set(i, newArticle);
-						break;
-					}
+				Article target = getArticleById(targetid);
+				if (target == null) {
+					System.out.println("없는 게시물입니다.");
+				}
+				else {
+					System.out.print("게시물 제목을 입력해주세요 : ");
+					String newTitle = sc.next();
 				}
 			}
 			if (cmd.equals("delete")) {
 				System.out.print("몇번 게시물을 지우시곘습니까 : ");
 				int targetId = sc.nextInt();
-				int exitFlag = 2;
-				for (int i = 0; i < articles.size(); i++) {
-					int id = articles.get(i).getId();
-					if (id == targetId) {
-						exitFlag = 1;
-						articles.remove(i);
-
-						break;
-					}
-
+				Article target = getArticleById(targetId);
+				if (target == null) {
+					System.out.println("1게시물이 존재하지 않습니다");
 				}
-				if (exitFlag == 2) {
-					System.out.println("게시물이 존재하지 않습니다.");
-				} else {
-					System.out.println(targetid + "번 게시물이 삭제되었습니다.");
+				else {
+					articles.remove(target);
 				}
+				
+				
 			}
 			if (cmd.equals("read")) {
-
-				for (int i = 0; i < articles.size(); i++) {
-					Article article = articles.get(i);
-
-					System.out.print("몇번 게시물을 확인하시겠습니까 : ");
-					int targetId = sc.nextInt();
-					int joinFlag = 2;
-					int j;
-					for (j = 0; j < articles.size(); j++) {
-						int id = articles.get(j).getId();
-						if (id == targetId) {
-							joinFlag = 1;
-							articles.remove(j);
-							System.out.println("==== 1번게시물 ====");
-							System.out.println("번호 : " + article.getId());
-							System.out.println("제목 : " + article.getTitle());
-							System.out.println("내용 : " + article.getBody());
-							System.out.println("===================");
-							break;
-						}
-						
-					}
-					if (joinFlag == 2) {
-						System.out.println("게시물이 존재하지 않습니다.");
-					} else {
-						
-					}
-					
+				System.out.print("몇번 게시물을 확인하시겠습니까? : ");
+				int targetId = sc.nextInt();
+				Article target = getArticleById(targetId);
+				if(target == null) {
+					System.out.println("게시물이 존재하지 않습니다.");
 				}
+				else {
+					System.out.println("==== 1번게시물 ====");
+					System.out.println("번호 : " + target.getId());
+					System.out.println("제목 : " + target.getTitle());
+					System.out.println("내용 : " + target.getBody());
+					System.out.println("===================");
+				}
+				
 			}
 		}
 	}
@@ -145,13 +110,13 @@ public class Test {
 		return -1;
 	}
 	//Article 버전
-	public static Article getArticleIndexById(int targetId) {
+	public static Article getArticleById(int targetId) {
 		for (int i = 0; i < articles.size(); i++) {
 			int id = articles.get(i).getId();
 			if (id == targetId) {
-				return i;
+				return articles.get(i);
 			}
 		}
-		return -1;
+		return null;
 	}
 }
