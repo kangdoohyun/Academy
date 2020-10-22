@@ -1,6 +1,8 @@
 package main;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
+
 import java.util.Scanner;
 
 public class Test {
@@ -8,6 +10,7 @@ public class Test {
 	public static void main(String[] args) {
 		articles = new ArrayList<>();
 		Scanner sc = new Scanner(System.in);
+		LocalDate newDate = LocalDate.now();
 		
 		
 		for (int i = 1; i <= 3; i++) {
@@ -50,6 +53,8 @@ public class Test {
 					Article article = articles.get(i);
 					System.out.println("번호 : " + article.getId());
 					System.out.println("제목 : " + article.getTitle());
+					System.out.println("작성자 : 익명");
+					System.out.println("등록 날자 : " + newDate);
 //					System.out.println("내용 : " + article.getBody());
 					System.out.println("===================");
 				}
@@ -89,7 +94,7 @@ public class Test {
 					System.out.println("게시물이 존재하지 않습니다.");
 				}
 				else {
-					System.out.println("==== 1번게시물 ====");
+					System.out.println("==== " + targetId + "번게시물 ====");
 					System.out.println("번호 : " + target.getId());
 					System.out.println("제목 : " + target.getTitle());
 					System.out.println("내용 : " + target.getBody());
