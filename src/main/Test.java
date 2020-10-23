@@ -1,31 +1,15 @@
 package main;
 
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Scanner;
 
 public class Test {
-	static ArrayList<Article> articles ;
+	
 	public static void main(String[] args) {
-		articles = new ArrayList<>();
+		
 		Scanner sc = new Scanner(System.in);
-		LocalDate newDate = LocalDate.now();
 		
-		
-		for (int i = 1; i <= 3; i++) {
-			Article a1 = new Article(1, "제목1", "내용1", "익명", getCurrentDate());
-			Article a2 = new Article(2, "제목2", "내용2", "익명", getCurrentDate());
-			Article a3 = new Article(3, "제목3", "내용3", "익명", getCurrentDate());
-			
-			articles.add(a1);
-			articles.add(a2);
-			articles.add(a3);
-		}
-		
-
-		int no = 4;
+		ArticleDao dao = new ArticleDao();
 
 		while (true) {
 			System.out.print("명령어 입력 : ");
@@ -35,9 +19,9 @@ public class Test {
 				break;
 			}
 			if (cmd.equals("add")) {
+				
 				Article a = new Article();
-				a.setId(no);
-				no++;
+				
 				System.out.print("게시물 제목을 입력해주세요 :");
 				String title = sc.next();
 				a.setTitle(title);
@@ -46,15 +30,17 @@ public class Test {
 				String body = sc.next();
 				a.setBody(body);
 				
-				a.setRegDate(getCurrentDate());
+				
 				a.setNickname("익명");
 				
-				articles.add(a);
+				dao.insertArticle(a);
 				System.out.println("게시물이 등록되었습니다.");
 				
-				no++;
+				
 			}
 			if (cmd.equals("list")) {
+				ArrayList<Article> articles = dao.getArticles();
+				
 				for (int i = 0; i < articles.size(); i++) {
 					Article article = articles.get(i);
 					System.out.println("번호 : " + article.getId());
@@ -69,25 +55,33 @@ public class Test {
 			if (cmd.equals("update")) {
 
 				System.out.print("수정할 게시물 선택 : ");
-				int targetid = sc.nextInt();
-				Article target = getArticleById(targetid);
+				int targetId = sc.nextInt();
+				Article target = dao.getArticleById(targetId);
 				if (target == null) {
 					System.out.println("없는 게시물입니다.");
 				}
 				else {
 					System.out.print("게시물 제목을 입력해주세요 : ");
 					String newTitle = sc.next();
+					
+					System.out.print("게시물 내용을 입력해주세요 : ");
+					String newBody = sc.next();
+					
+					target.setTitle(newTitle);
+					target.setBody(newBody);
+					
 				}
 			}
 			if (cmd.equals("delete")) {
+				
 				System.out.print("몇번 게시물을 지우시곘습니까 : ");
 				int targetId = sc.nextInt();
-				Article target = getArticleById(targetId);
+				Article target = dao.getArticleById(targetId);
 				if (target == null) {
-					System.out.println("1게시물이 존재하지 않습니다");
+					System.out.println("게시물이 존재하지 않습니다");
 				}
 				else {
-					articles.remove(target);
+					dao.removeArticle(target);
 				}
 				
 				
@@ -95,7 +89,7 @@ public class Test {
 			if (cmd.equals("read")) {
 				System.out.print("몇번 게시물을 확인하시겠습니까? : ");
 				int targetId = sc.nextInt();
-				Article target = getArticleById(targetId);
+				Article target = dao.getArticleById(targetId);
 				if(target == null) {
 					System.out.println("게시물이 존재하지 않습니다.");
 				}
@@ -109,32 +103,25 @@ public class Test {
 				}
 				
 			}
-		}
-	}
-	//index 버전
-	public static int getArticleIndexById(int targetId) {
-		for (int i = 0; i < articles.size(); i++) {
-			int id = articles.get(i).getId();
-			if (id == targetId) {
-				return i;
+			if (cmd.equals("search")) {
+				System.out.println("검색 키워드를 입력해주세요 : ");
+				String keyword = sc.next();
+				ArrayList<Article> searchedArticles = dao.getSearchedArticlesByTitle(keyword);
+				System.out.println("번호 : " + searchedarticle.getId());
+				System.out.println("제목 : " + searchedarticle.getTitle());
+				System.out.println("등록 날자 : " + searchedarticle.getRegDate());
+				System.out.println("작성자 : " + searchedarticle.getNickname());
+				System.out.println("조회수 : " + searchedarticle.getHit());
+				System.out.println("===================");
+//				String text = sc.next();
+//				boolean searchText = text.contains(sc.next());
+//				if (cmd.contains(sc.next())) {
+//					
+//				}
 			}
 		}
-		return -1;
 	}
-	//Article 버전
-	public static Article getArticleById(int targetId) {
-		for (int i = 0; i < articles.size(); i++) {
-			int id = articles.get(i).getId();
-			if (id == targetId) {
-				return articles.get(i);
-			}
-		}
-		return null;
-	}
-	public static String getCurrentDate() {
-		SimpleDateFormat format1 = new SimpleDateFormat ( "yyyy.MM.dd");
-		Date time = new Date();
-		String time1 = format1.format(time);
-		return time1;
+	public void printArticles(ArrayList<Article> articleList) {
+		
 	}
 }
