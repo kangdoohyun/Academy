@@ -104,24 +104,24 @@ public class Test {
 				
 			}
 			if (cmd.equals("search")) {
-				System.out.println("검색 키워드를 입력해주세요 : ");
+				System.out.print("검색 키워드를 입력해주세요 : ");
 				String keyword = sc.next();
 				ArrayList<Article> searchedArticles = dao.getSearchedArticlesByTitle(keyword);
-				System.out.println("번호 : " + searchedarticle.getId());
-				System.out.println("제목 : " + searchedarticle.getTitle());
-				System.out.println("등록 날자 : " + searchedarticle.getRegDate());
-				System.out.println("작성자 : " + searchedarticle.getNickname());
-				System.out.println("조회수 : " + searchedarticle.getHit());
-				System.out.println("===================");
-//				String text = sc.next();
-//				boolean searchText = text.contains(sc.next());
-//				if (cmd.contains(sc.next())) {
-//					
-//				}
+				
+				printArticles(searchedArticles);
+
 			}
 		}
 	}
-	public void printArticles(ArrayList<Article> articleList) {
-		
+	public static void printArticles(ArrayList<Article> articleList) {
+		for(int i = 0; i < articleList.size(); i++) {
+			Article article = articleList.get(i);
+			System.out.println("번호 : " + article.getId());
+			System.out.println("제목 : " + article.getTitle());
+			System.out.println("등록날짜 : " + article.getRegDate());
+			System.out.println("작성자 : " + article.getNickname());
+			System.out.println("조회수 : " + article.getHit());
+			System.out.println("===================");
+		}
 	}
 }

@@ -35,19 +35,17 @@ public class ArticleDao {
 		String time1 = format1.format(time);
 		return time1;
 	}
-	public getSearchedArticlesByTitle(String keyword) {
-		Arraylist<Article> searchArticles = new ArrayList<>();
-		String str = "" ;
+	public ArrayList<Article> getSearchedArticlesByTitle(String keyword) {
+		ArrayList<Article> searchArticles = new ArrayList<>();
+		
 		for(int i = 0; i < articles.size(); i++) {
 			Article article = articles.get(i);
-			String str = artocle.getTitle();
-		}
+			String str = article.getTitle();
 			if(str.contains(keyword)) {
-				searchArticles
+				searchArticles.add(article);
 			}
-		
-			
-            
+		}
+		return searchArticles;      
 	}
 	public static Article getArticleById(int targetId) {
 		for (int i = 0; i < articles.size(); i++) {
