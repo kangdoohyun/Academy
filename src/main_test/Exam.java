@@ -101,27 +101,27 @@ public class Exam {
 			}
 			if (cmd.equals("search")) {
 				System.out.print("검색 항목을 선택해 주세요 (1.제목, 2.내용, 3.제목+내용, 4.작성자) : ");
-				String item = sc.next();
-		
-				if(item.equals("1")) {
+				int item = sc.nextInt();
+				ArrayList<Article> searchedArticles;
+				if(item == 1) {
 					System.out.print("검색 키워드를 입력해주세요 : ");
 					String keywordTitle = sc.next();
-					ArrayList<Article> searchedArticles = dao.getSearchedArticlesByTitle(keywordTitle);
+					searchedArticles = dao.getSearchedArticlesByFlag(keyword);
 
 					printArticles(searchedArticles);
-				}else if(item.equals("2")) {
+				}else if(item == 2) {
 					System.out.print("검색 키워드를 입력해주세요 : ");
 					String keywordBody = sc.next();
-					ArrayList<Article> searchedArticles = dao.getSearchedArticlesByBody(keywordBody);
+					searchedArticles = dao.getSearchedArticlesByFlag(keyword);
 					
 					printArticles(searchedArticles);
-				}else if(item.equals("3")) {
+				}else if(item == 3) {
 					System.out.print("검색 키워드를 입력해주세요 : ");
 					String keywordBody = sc.next();
-					ArrayList<Article> searchedArticles = dao.getSearchedArticlesByTitleBody(keywordBody);
+					searchedArticles = dao.getSearchedArticlesByFlag(keyword);
 					
 					printArticles(searchedArticles);
-				}else if(item.equals("4")) {
+				}else if(item == 4) {
 					
 				}
 				

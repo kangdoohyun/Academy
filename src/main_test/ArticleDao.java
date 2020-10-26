@@ -36,43 +36,31 @@ public class ArticleDao {
 		String time1 = format1.format(time);
 		return time1;
 	}
-	public ArrayList<Article> getSearchedArticlesByTitle(String keywordTitle) {
+	public ArrayList<Article> getSearchedArticlesByFlag(int flag, String keyword) {
 		ArrayList<Article> searchArticles = new ArrayList<>();
 		
 		for(int i = 0; i < articles.size(); i++) {
 			Article article = articles.get(i);
-			String str = article.getTitle();
-			if(str.contains(keywordTitle)) {
+			String str = "";
+			if(flag == 1) {
+				str = article.getTitle();	
+			}
+			if(flag == 2) {
+				str = article.getBody();	
+			}
+			if(flag == 1) {
+				str = article.getTitle() + article.getBody();
+			}
+			if(flag == 1) {
+				str = article.getNickname();
+			}
+			if(str.contains(keyword)) {
 				searchArticles.add(article);
 			}
 		}
 		return searchArticles;      
 	}
-	public ArrayList<Article> getSearchedArticlesByBody(String keywordBody){
-		ArrayList<Article> searchItem = new ArrayList<>();
-		for(int i = 0; i < articles.size(); i++) {
-			Article article = articles.get(i);
-			String str = article.getBody();
-			if(str.contains(keywordBody)) {
-				searchItem.add(article);
-			}
-		}
-		return searchItem;  
-	}
-	public ArrayList<Article> getSearchedArticlesByTitleBody(String keywordTitle, String keywordBody){
-		ArrayList<Article> searchItem = new ArrayList<>();
-		for(int i = 0; i < articles.size(); i++) {
-			Article article = articles.get(i);
-			String body = article.getBody();
-			String title = article.getTitle();
-			if(body.contains(keywordBody)) {
-				searchItem.add(article);
-			}else if(title.contains(keywordTitle)){
-				searchItem.add(article);
-			}
-		}
-		return searchItem;  
-	}
+	
 	public static Article getArticleById(int targetId) {
 		for (int i = 0; i < articles.size(); i++) {
 			int id = articles.get(i).getId();
