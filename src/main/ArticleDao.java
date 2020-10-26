@@ -35,17 +35,18 @@ public class ArticleDao {
 		String time1 = format1.format(time);
 		return time1;
 	}
-	public ArrayList<Article> getSearchedArticlesByTitle(String keyword) {
-		ArrayList<Article> searchArticles = new ArrayList<>();
-		
-		for(int i = 0; i < articles.size(); i++) {
+	public ArrayList<Article> getSearchedArticlesByFlag(int flag, String keyword) {
+		ArrayList<Article> searchedArticles = new ArrayList<>();
+
+		for (int i = 0; i < articles.size(); i++) {
 			Article article = articles.get(i);
-			String str = article.getTitle();
-			if(str.contains(keyword)) {
-				searchArticles.add(article);
+			String str = article.getPropertiesByFlag(flag); // 각 게시물 제목
+			if (str.contains(keyword)) {
+				searchedArticles.add(article);
 			}
 		}
-		return searchArticles;      
+
+		return searchedArticles;    
 	}
 	public static Article getArticleById(int targetId) {
 		for (int i = 0; i < articles.size(); i++) {
