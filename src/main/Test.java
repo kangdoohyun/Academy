@@ -10,6 +10,7 @@ public class Test {
 		Scanner sc = new Scanner(System.in);
 		
 		ArticleDao dao = new ArticleDao();
+		CommentDao cDao = new CommentDao();
 
 		while (true) {
 			System.out.print("명령어 입력 : ");
@@ -104,8 +105,26 @@ public class Test {
 						System.out.println("상세보기 기능을 선택해주세요(1. 댓글 등록, 2. 좋아요, 3. 수정, 4. 삭제, 5. 목록으로) :");
 						int readCmd = sc.nextInt();
 						if(readCmd == 1) {
+							Comment commentArticle = new Comment();
+							ArrayList<Comment> comments = cDao.getComments();
+							
 							System.out.print("댓글 내용을 입력해 주세요 : ");
 							String comment = sc.next();
+							commentArticle.setComment(comment);
+							
+							commentArticle.setNickname("익명");
+							
+							System.out.println("==== " + target.getId() + "번게시물 ====");
+							System.out.println("번호 : " + target.getId());
+						    System.out.println("제목 : " + target.getTitle());
+							System.out.println("내용 : " + target.getBody());
+							System.out.println("===================");
+							for (int j = 0; j < comments.size(); j++) {
+								System.out.println("------댓글------");
+								System.out.println("내용 : " + commentArticle.getComment());
+								System.out.println("작성자 : " + commentArticle.getNickname());
+								System.out.println("등록 날자 : " + commentArticle.getRegDate());
+							}
 						}else if (readCmd == 2) {
 							System.out.println("좋아요 기능");
 						}else if (readCmd == 3) {

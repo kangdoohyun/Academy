@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class ArticleDao {
-	// D a o = Data Access Object
 	private static ArrayList<Article> articles ;
+	
 	private int no = 4;
 	public ArticleDao() {
 			articles = new ArrayList<>();
