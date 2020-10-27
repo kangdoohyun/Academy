@@ -3,6 +3,7 @@ package main;
 
 public class Comment {
 	private int id;
+	private int parentId;
 	private String comment;
 	private String nickname;
 	private String regDate;
@@ -10,8 +11,9 @@ public class Comment {
 	public Comment() {
 		
 	}
-	public Comment (int id, String comment, String nickname, String regDate) {
+	public Comment (int id, int parentId, String comment, String nickname, String regDate) {
 		this.id = id;
+		this.parentId = parentId;
 		this.comment = comment;
 		this.regDate = regDate;
 		this.nickname = nickname;
@@ -47,6 +49,12 @@ public class Comment {
 
 	public void setNickname(String nickname) {
 		this.nickname = nickname;
+	}
+	public int getParentId() {
+		return parentId;
+	}
+	public void setParentId(int parentId) {
+		this.parentId = parentId;
 	}
 	
 }
