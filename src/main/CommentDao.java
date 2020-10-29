@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class CommentDao {
-private static ArrayList<Comment> comments ;
+private ArrayList<Comment> comments ;
 	
 	private int no = 1;
 	public CommentDao() {
@@ -68,6 +68,6 @@ private static ArrayList<Comment> comments ;
 				searchedComments.add(comment);
 			}
 		}
-		return comments;
+		return searchedComments;
 	}
 }

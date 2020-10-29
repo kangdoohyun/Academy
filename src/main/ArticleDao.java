@@ -5,9 +5,9 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class ArticleDao {
-	private static ArrayList<Article> articles ;
-	
+	private ArrayList<Article> articles ;
 	private int no = 4;
+	
 	public ArticleDao() {
 			articles = new ArrayList<>();
 			Article a1 = new Article(1, "제목1", "내용1", "익명", getCurrentDate());
@@ -48,7 +48,7 @@ public class ArticleDao {
 
 		return searchedArticles;    
 	}
-	public static Article getArticleById(int targetId) {
+	public Article getArticleById(int targetId) {
 		for (int i = 0; i < articles.size(); i++) {
 			int id = articles.get(i).getId();
 			if (id == targetId) {
