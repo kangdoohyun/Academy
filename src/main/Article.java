@@ -6,6 +6,7 @@ public class Article {
 	private String body;
 	private String regDate;
 	private String nickname;
+	private String loginId;
 	private int hit;
 	
 	public Article(){
@@ -53,6 +54,12 @@ public class Article {
 	}
 	public void setNickname(String nickname) {
 		this.nickname = nickname;
+	}
+	public String getLoginId() {
+		return loginId;
+	}
+	public void setLoginId(String loginId) {
+		this.loginId = loginId;
 	}
 	public int getHit() {
 		return hit;
