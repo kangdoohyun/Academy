@@ -1,18 +1,19 @@
 package main;
 
+import java.util.ArrayList;
+
 public class Article {
 	private int id;
 	private String title;
 	private String body;
 	private String regDate;
-	private String nickname;
-	private String loginId;
+	private int mid;
 	private int hit;
 	
 	public Article(){
 		
 	}
-	public Article (int id, String title, String body, String nickname, String regDate) {
+	public Article (int id, String title, String body, int mid, String regDate) {
 		this.id = id;
 		
 		this.title = title;
@@ -21,7 +22,7 @@ public class Article {
 		
 		this.regDate = regDate;
 		
-		this.nickname = nickname;
+		this.mid = mid;
 		
 	}
 	
@@ -49,17 +50,11 @@ public class Article {
 	public void setRegDate(String regDate) {
 		this.regDate = regDate;
 	}
-	public String getNickname() {
-		return nickname;
+	public int getMid() {
+		return mid;
 	}
-	public void setNickname(String nickname) {
-		this.nickname = nickname;
-	}
-	public String getLoginId() {
-		return loginId;
-	}
-	public void setLoginId(String loginId) {
-		this.loginId = loginId;
+	public void setMid(int mid) {
+		this.mid = mid;
 	}
 	public int getHit() {
 		return hit;
@@ -67,6 +62,7 @@ public class Article {
 	public void setHit(int hit) {
 		this.hit = hit;
 	}
+	
 	public String getPropertiesByFlag(int flag) {
 		String str = "";
 		if(flag == 1) {
@@ -76,7 +72,7 @@ public class Article {
 		} else if(flag == 3) {
 			str = this.getTitle() + this.getBody(); 
 		} else {
-			str = this.getNickname();
+//			str = this.getmid() + "";
 		}
 
 		return str;

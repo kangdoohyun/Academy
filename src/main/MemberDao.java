@@ -6,12 +6,16 @@ import java.util.Date;
 
 public class MemberDao {
 	private ArrayList<Member> members;
-	private int no = 1;
+	private int no = 4;
 
 	public MemberDao() {
 		members = new ArrayList<>();
-		Member a1 = new Member(1, "k123", "1234", "강두현", getCurrentDate());
-		members.add(a1);
+		Member m1 = new Member(1, "k123", "1234", "강두현", getCurrentDate());
+		Member m2 = new Member(2, "hong123", "1234", "홍길동", getCurrentDate());
+		Member m3 = new Member(3, "lee123", "1234", "이순신", getCurrentDate());
+		members.add(m1);
+		members.add(m2);
+		members.add(m3);
 	}
 
 	public void insertMember(Member m) {
@@ -41,7 +45,16 @@ public class MemberDao {
 //		}
 //		return null;
 //	}
+	public Member getMemberById(int id) {
+		for(int i = 0; i < members.size(); i++) {
+			Member m = members.get(i);
+			if(m.getId() == id) {
+				return m;
+			}
+		}
 
+		return null;
+	}
 	public Member getMembrByLoginIdAndLoginPw(String id, String pw) {
 		for(int i = 0; i <members.size(); i++) {
 			Member m = members.get(i);
