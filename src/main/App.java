@@ -9,7 +9,7 @@ public class App {
 	ArticleDao articleDao = new ArticleDao();
 	LikeDao likeDao = new LikeDao();
 	Member loginedMember = null;
-	Article a = new Article();
+	
 
 	public void start() {
 		Scanner sc = new Scanner(System.in);
@@ -31,6 +31,8 @@ public class App {
 								+ "member [signup : 회원가입 / signin : 로그인 / findpass : 비밀번호 찾기 / findid : 아이디 찾기 / logout : 로그아웃 / myinfo : 나의 정보 확인및 수정]");
 			}
 			if (cmd.equals("article add")) {
+				Article a = new Article();
+				
 				if (!isLogin()) {
 					continue;
 				}
@@ -101,6 +103,9 @@ public class App {
 
 						int readCmd = Integer.parseInt(sc.nextLine());
 						if (readCmd == 1) {
+							if (!isLogin()) {
+								continue;
+							}
 							Comment c = new Comment();
 							System.out.print("댓글 내용을 입력해 주세요 : ");
 							String comment = sc.nextLine();
@@ -113,32 +118,68 @@ public class App {
 							printArticle(target);
 
 						} else if (readCmd == 2) {
-							if()
+							if (!isLogin()) {
+								continue;
+							}
+							Like rst = likeDao.getLikeByArticleIdAndMemberId(target.getId(), loginedMember.getId());
+							if (rst == null) {
+								Like like = new Like(target.getId(), loginedMember.getId());
+								likeDao.insertLike(like);
+								System.out.println("좋아요");
+							}else {
+								
+								likeDao.remveLike(rst);
+								System.out.println("좋아요 해제");
+							}
 							printArticle(target);
+							
 						} else if (readCmd == 3) {
-							if (!isLogin() || !isMyArticle(target)) {
-
-								System.out.print("게시물 제목을 입력해주세요 : ");
-								String newTitle = sc.nextLine();
-
-								System.out.print("게시물 내용을 입력해주세요 : ");
-								String newBody = sc.nextLine();
-
-								target.setTitle(newTitle);
-								target.setBody(newBody);
-
-								printArticle(target);
-							} else {
-								System.out.println("본인의 글만 수정할 수 있습니다.");
+							if(!isLogin() || !isMyArticle(target)) {
+								continue;
 							}
+							
+							System.out.println("게시물 제목을 입력해주세요 :");
+							String newTitle = sc.nextLine();
+							System.out.println("게시물 내용을 입력해주세요 :");
+							String newBody = sc.nextLine();
+							target.setTitle(newTitle);
+							target.setBody(newBody);
+							printArticle(target);
+//							if (!isLogin()) {
+//								continue;
+//							}
+//							if (!isLogin() || !isMyArticle(target)) {
+//
+//								System.out.print("게시물 제목을 입력해주세요 : ");
+//								String newTitle = sc.nextLine();
+//
+//								System.out.print("게시물 내용을 입력해주세요 : ");
+//								String newBody = sc.nextLine();
+//
+//								target.setTitle(newTitle);
+//								target.setBody(newBody);
+//
+//								printArticle(target);
+//							} else {
+//								System.out.println("본인의 글만 수정할 수 있습니다.");
+//							}
 						} else if (readCmd == 4) {
-							if (!isLogin() || !isMyArticle(target)) {
-								articleDao.removeArticle(target);
-								System.out.println("삭제가 완료되었습니다");
-								break;
-							} else {
-								System.out.println("본인의 게시물만 삭제할수 있습니다.");
+							if(!isLogin() || !isMyArticle(target)) {
+								continue;
 							}
+							
+							articleDao.removeArticle(target);
+							break;
+//							if (!isLogin()) {
+//								continue;
+//							}
+//							if (!isLogin() || !isMyArticle(target)) {
+//								articleDao.removeArticle(target);
+//								System.out.println("삭제가 완료되었습니다");
+//								break;
+//							} else {
+//								System.out.println("본인의 게시물만 삭제할수 있습니다.");
+//							}
 						} else if (readCmd == 5) {
 							break;
 						} else {
@@ -210,6 +251,8 @@ public class App {
 			System.out.println("등록날짜 : " + article.getRegDate());
 			System.out.println("작성자 : " + article.getMid());
 			System.out.println("조회수 : " + article.getHit());
+			int likeCnt = likeDao.getLikeCount(article.getId());
+			System.out.println("좋아요 : " + likeCnt);
 			System.out.println("===================");
 		}
 	}
@@ -233,7 +276,8 @@ public class App {
 		Member regMember = memberDao.getMemberById(target.getMid());
 		System.out.println("작성자 : " + regMember.getNickname());
 		System.out.println("조회수 : " + target.getHit());
-//		System.out.println("좋아요 : " + target.getLike());
+		int likeCnt = likeDao.getLikeCount(target.getId());
+		System.out.println("좋아요 : " + likeCnt);
 		System.out.println("===================");
 		System.out.println("--------댓글--------");
 		ArrayList<Comment> replies = commentDao.getRepliesByParentId(target.getId());
@@ -252,7 +296,7 @@ public class App {
 	private boolean isMyArticle(Article article) {
 
 		if (loginedMember.getId() != article.getMid()) {
-			System.out.println("자신의 게시물만 수정 가능합니다.");
+			System.out.println("자신의 게시물만 수정/삭제 가능합니다.");
 			return false;
 		}
 

@@ -6,29 +6,37 @@ import java.util.Date;
 
 public class LikeDao {
 	private ArrayList<Like> likes;
-	private int no = 4;
+	private int no = 1;
+	
 	public LikeDao() {
-		likes = new ArrayList<>();
-		
+		likes = new ArrayList<>();	
 	}
 	public void insertLike(Like l) {
 		l.setId(no);
 		no++;
-		l.setRegDate(getCurrentDate());
-
+		l.setRegDate(Util.getCurrentDate());
 		likes.add(l);
 	}
-	public void insertArticle(Article a) {
-		a.setId(no);
-		no++;
-		a.setRegDate(getCurrentDate());
-
-		likes.add(l);
+	public Like getLikeByArticleIdAndMemberId(int aid, int mid) {
+		for (int i = 0; i < likes.size(); i++) {
+			Like like = likes.get(i);
+			if(like.getParentId() == aid && like.getMemberId() == mid) {
+				return like;
+			}
+		}
+		return null;
 	}
-	private static String getCurrentDate() {
-		SimpleDateFormat format1 = new SimpleDateFormat("yyyy.MM.dd");
-		Date time = new Date();
-		String time1 = format1.format(time);
-		return time1;
+	public void remveLike(Like rst) {
+		likes.remove(rst);
+	}
+	public int getLikeCount(int id) {
+		int cnt = 0;
+		for(int i = 0; i<likes.size(); i++) {
+			Like like = likes.get(i);
+			if(like.getParentId() == id) {
+				cnt++;
+			}
+		}
+		return cnt;
 	}
 }

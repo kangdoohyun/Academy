@@ -1,7 +1,5 @@
 package main;
 
-import java.util.ArrayList;
-
 public class Article {
 	private int id;
 	private String title;

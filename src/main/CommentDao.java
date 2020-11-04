@@ -21,19 +21,13 @@ private ArrayList<Comment> comments ;
 	public void insertComment(Comment a) {
 		a.setId(no);
 		no++;
-		a.setRegDate(getCurrentDate());
+		a.setRegDate(Util.getCurrentDate());
 		
 		comments.add(a);
 	}
 	
 	public void removeArticle(Comment a) {
 		comments.remove(a);
-	}
-	private static String getCurrentDate() {
-		SimpleDateFormat format1 = new SimpleDateFormat ("yyyy.MM.dd");
-		Date time = new Date();
-		String time1 = format1.format(time);
-		return time1;
 	}
 	/*public ArrayList<Article> getSearchedArticlesByFlag(int flag, String keyword) {
 		ArrayList<Article> searchedArticles = new ArrayList<>();
