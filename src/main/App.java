@@ -9,7 +9,6 @@ public class App {
 	ArticleDao articleDao = new ArticleDao();
 	LikeDao likeDao = new LikeDao();
 	Member loginedMember = null;
-	
 
 	public void start() {
 		Scanner sc = new Scanner(System.in);
@@ -32,7 +31,7 @@ public class App {
 			}
 			if (cmd.equals("article add")) {
 				Article a = new Article();
-				
+
 				if (!isLogin()) {
 					continue;
 				}
@@ -126,13 +125,13 @@ public class App {
 								Like like = new Like(target.getId(), loginedMember.getId());
 								likeDao.insertLike(like);
 								System.out.println("좋아요");
-							}else {
-								
+							} else {
+
 								likeDao.remveLike(rst);
 								System.out.println("좋아요 해제");
 							}
 							printArticle(target);
-							
+
 						} else if (readCmd == 3) {
 							if(!isLogin() || !isMyArticle(target)) {
 								continue;
@@ -145,41 +144,14 @@ public class App {
 							target.setTitle(newTitle);
 							target.setBody(newBody);
 							printArticle(target);
-//							if (!isLogin()) {
-//								continue;
-//							}
-//							if (!isLogin() || !isMyArticle(target)) {
-//
-//								System.out.print("게시물 제목을 입력해주세요 : ");
-//								String newTitle = sc.nextLine();
-//
-//								System.out.print("게시물 내용을 입력해주세요 : ");
-//								String newBody = sc.nextLine();
-//
-//								target.setTitle(newTitle);
-//								target.setBody(newBody);
-//
-//								printArticle(target);
-//							} else {
-//								System.out.println("본인의 글만 수정할 수 있습니다.");
-//							}
+							
 						} else if (readCmd == 4) {
-							if(!isLogin() || !isMyArticle(target)) {
+							if (!isLogin() || !isMyArticle(target)) {
 								continue;
 							}
-							
 							articleDao.removeArticle(target);
 							break;
-//							if (!isLogin()) {
-//								continue;
-//							}
-//							if (!isLogin() || !isMyArticle(target)) {
-//								articleDao.removeArticle(target);
-//								System.out.println("삭제가 완료되었습니다");
-//								break;
-//							} else {
-//								System.out.println("본인의 게시물만 삭제할수 있습니다.");
-//							}
+							
 						} else if (readCmd == 5) {
 							break;
 						} else {
@@ -294,7 +266,6 @@ public class App {
 	}
 
 	private boolean isMyArticle(Article article) {
-
 		if (loginedMember.getId() != article.getMid()) {
 			System.out.println("자신의 게시물만 수정/삭제 가능합니다.");
 			return false;
